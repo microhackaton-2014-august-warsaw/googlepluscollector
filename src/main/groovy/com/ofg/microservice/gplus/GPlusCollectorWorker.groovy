@@ -16,7 +16,8 @@ import org.springframework.web.client.RestTemplate
 @Component
 @PackageScope class GPlusCollectorWorker implements GPlusCollector  {
 
-    public static final MediaType TWITTER_PLACES_ANALYZER_MEDIA_TYPE = new MediaType('application/json')
+    public static final MediaType GPLUS_SENTENCE_ANALYZER_MEDIA_TYPE = new MediaType("application", GPLUS_SENTENCE_CONTENT_MEDIA_TYPE)
+    public static final String GPLUS_SENTENCE_CONTENT_MEDIA_TYPE = "vnd.com.ofg.google-topic-analyzer.v1+json"
 
     private GPlusGetter gPlusGetter
     private RestTemplate restTemplate = new RestTemplate()
@@ -29,14 +30,14 @@ import org.springframework.web.client.RestTemplate
     }
 
     void collectAndPassToAnalyzers(String twitterLogin, Long pairId) {
-        Collection<Activity> activites = gPlusGetter.getTweets(twitterLogin)
+        Collection<Activity> activites = gPlusGetter.getActivities(twitterLogin)
         String analyzerUrl = serviceResolver.getUrl('analyzer').get()
         restTemplate.put("$analyzerUrl/api/{pairId}", createEntity(activites), pairId)
     }
 
     private HttpEntity<Object> createEntity(Object object) {
         HttpHeaders headers = new HttpHeaders()
-        headers.setContentType(TWITTER_PLACES_ANALYZER_MEDIA_TYPE)
+        headers.setContentType(GPLUS_SENTENCE_ANALYZER_MEDIA_TYPE)
         headers.set(CorrelationIdHolder.CORRELATION_ID_HEADER, CorrelationIdHolder.get())
         return new HttpEntity<Object>(object, headers);
     }

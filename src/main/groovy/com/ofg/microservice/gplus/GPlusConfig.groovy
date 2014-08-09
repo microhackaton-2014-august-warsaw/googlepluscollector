@@ -19,7 +19,7 @@ class GPlusConfig {
     @Bean
     CacheManager cacheManager() {
         CacheConfiguration cacheConfiguration = new CacheConfiguration()
-        cacheConfiguration.setName("tweets")
+        cacheConfiguration.setName("activities")
         cacheConfiguration.setMemoryStoreEvictionPolicy("LRU")
         cacheConfiguration.setMaxEntriesLocalHeap(1000)
         cacheConfiguration.setTimeToLiveSeconds(60 * 10)
