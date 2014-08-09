@@ -9,14 +9,14 @@ import java.util.concurrent.TimeUnit
 import static com.github.tomakehurst.wiremock.client.WireMock.*
 import static com.jayway.awaitility.Awaitility.await
 import static com.ofg.infrastructure.base.dsl.WireMockHttpRequestMapper.wireMockPut
-import static com.ofg.microservice.gplus.GPlusCollectorWorker.TWITTER_PLACES_ANALYZER_MEDIA_TYPE
+import static com.ofg.microservice.gplus.GPlusCollectorWorker.GPLUS_SENTENCE_ANALYZER_MEDIA_TYPE
 import static org.springframework.http.HttpStatus.OK
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class AcceptanceSpec extends MicroserviceMvcWiremockSpec {
     String pairId = '1'
-    String testUserTwitterId = 'jnabrdalik'
+    String testUserGPlusId = 'jnabrdalik'
 
     def "should return HTTP 200"() {
         given:
@@ -27,20 +27,20 @@ class AcceptanceSpec extends MicroserviceMvcWiremockSpec {
             })
     }
 
-    def "should send tweets with pairId to analyzer"() {
+    def "should send activities with pairId to analyzer"() {
         given:
             analyzerRespondsOk()
         when:
             sendUsernameAndPairId()
         then:
             await().atMost(5, TimeUnit.SECONDS).until({ wireMock.verifyThat(putRequestedFor(urlEqualTo("/analyzer/api/$pairId")).
-                        withRequestBody(containing('[{"extraData":{')).
-                        withHeader("Content-Type", equalTo(TWITTER_PLACES_ANALYZER_MEDIA_TYPE.toString())))
+                        withRequestBody(containing('[{"placeName')).
+                        withHeader("Content-Type", equalTo(GPLUS_SENTENCE_ANALYZER_MEDIA_TYPE.toString())))
             })
     }
 
     private ResultActions sendUsernameAndPairId() {
-        mockMvc.perform(get("/activities/$testUserTwitterId/$pairId").
+        mockMvc.perform(get("/activities/$testUserGPlusId/$pairId").
                 accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
     }

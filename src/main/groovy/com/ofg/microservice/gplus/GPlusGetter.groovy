@@ -22,10 +22,10 @@ import static org.springframework.util.StringUtils.hasText
     }
 
     @Cacheable("activities")
-    Collection<Activity> getTweets(String gPlusLogin) {
+    Collection<Activity> getActivities(String gPlusLogin) {
         hasText(gPlusLogin)
         //return twitter.timelineOperations().getUserTimeline(gPlusLogin, numberOfActivities).findAll{!it.isRetweet()}
 
-        return Collections.emptyList();
+        return Collections.singleton(new Activity());
     }
 }
