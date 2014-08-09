@@ -31,9 +31,9 @@ import org.springframework.web.client.RestTemplate
     }
 
     void collectAndPassToAnalyzers(String gPlusLogin, Long pairId) {
-        Collection<SimpleActivity> activites = gPlusGetter.getActivities(gPlusLogin)
+        Collection<SimpleActivity> activities = gPlusGetter.getActivities(gPlusLogin)
         String analyzerUrl = serviceResolver.getUrl('analyzer').get()
-        restTemplate.put("$analyzerUrl/api/{pairId}", createEntity(activites), pairId)
+        restTemplate.put("$analyzerUrl/api/{pairId}", createEntity(activities), pairId)
     }
 
     private HttpEntity<Object> createEntity(Object object) {
