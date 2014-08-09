@@ -1,6 +1,5 @@
 package com.ofg.microservice.gplus
 
-import com.googlecode.googleplus.model.activity.Activity
 import com.ofg.infrastructure.discovery.ServiceResolver
 import com.ofg.infrastructure.web.filter.correlationid.CorrelationIdHolder
 import groovy.transform.PackageScope
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.social.google.api.plus.Activity
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 

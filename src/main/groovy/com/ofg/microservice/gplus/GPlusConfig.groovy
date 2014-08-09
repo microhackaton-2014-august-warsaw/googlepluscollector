@@ -1,20 +1,32 @@
 package com.ofg.microservice.gplus
-
 import groovy.transform.TypeChecked
 import net.sf.ehcache.config.CacheConfiguration
 import org.springframework.cache.CacheManager
 import org.springframework.cache.ehcache.EhCacheCacheManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.social.connect.ConnectionFactoryLocator
+import org.springframework.social.connect.support.ConnectionFactoryRegistry
+import org.springframework.social.google.api.Google
+import org.springframework.social.google.api.impl.GoogleTemplate
+import org.springframework.social.google.connect.GoogleConnectionFactory
 
 @Configuration
 @TypeChecked
 class GPlusConfig {
-    /*@Bean
-    @Autowired
-    Twitter twitter(@Value('${gplus.id}') String id, @Value('${gplus.secret}') String secret) {
-        return new TwitterTemplate(id, secret)
-    }*/
+
+    @Bean
+    public ConnectionFactoryLocator connectionFactoryLocator() {
+        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
+        registry.addConnectionFactory(new GoogleConnectionFactory("73915658310-35gtaevji4f4812rq6l8fht5j3qqmqis.apps.googleusercontent.com",
+                "v4l0veV8ev-lpRhSH3r4GPkO"));
+        return registry;
+    }
+
+    @Bean
+    public Google google() {
+        return new GoogleTemplate()
+    }
 
     @Bean
     CacheManager cacheManager() {
