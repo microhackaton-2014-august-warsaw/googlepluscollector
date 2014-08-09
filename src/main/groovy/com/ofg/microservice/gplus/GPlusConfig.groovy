@@ -24,7 +24,7 @@ class GPlusConfig {
     }
     @Bean
     public Google google() {
-        return new GoogleTemplate()
+        return new GoogleTemplate("4/WBqa9UjU5khQs0yUevO2Id1Y9te5.kj9M5gJCplIToiIBeO6P2m-6wr92jwI")
     }
 
     @Bean
