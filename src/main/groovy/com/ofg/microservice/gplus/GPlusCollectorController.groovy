@@ -19,9 +19,9 @@ class GPlusCollectorController {
     }
 
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(value = "/tweets/{twitterLogin}/{pairId}", produces="application/json", method = RequestMethod.GET)
-    void getTweets(@PathVariable String twitterLogin, @PathVariable Long pairId) {
-        hasText(twitterLogin); notNull(pairId)
-        collectorWorker.collectAndPassToAnalyzers(twitterLogin, pairId)
+    @RequestMapping(value = "/activities/{gPlusLogin}/{pairId}", produces="application/json", method = RequestMethod.GET)
+    void getTweets(@PathVariable String gPlusLogin, @PathVariable Long pairId) {
+        hasText(gPlusLogin); notNull(pairId)
+        collectorWorker.collectAndPassToAnalyzers(gPlusLogin, pairId)
     }
 }

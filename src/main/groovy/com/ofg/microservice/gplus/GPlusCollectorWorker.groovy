@@ -1,5 +1,6 @@
 package com.ofg.microservice.gplus
 
+import com.googlecode.googleplus.model.activity.Activity
 import com.ofg.infrastructure.discovery.ServiceResolver
 import com.ofg.infrastructure.web.filter.correlationid.CorrelationIdHolder
 import groovy.transform.PackageScope
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.social.twitter.api.Tweet
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
@@ -16,23 +16,22 @@ import org.springframework.web.client.RestTemplate
 @Component
 @PackageScope class GPlusCollectorWorker implements GPlusCollector  {
 
-    public static final String TWITTER_PLACES_ANALYZER_CONTENT_TYPE_HEADER = 'vnd.com.ofg.gplus-places-analyzer.v1+json'
-    public static final MediaType TWITTER_PLACES_ANALYZER_MEDIA_TYPE = new MediaType('application', TWITTER_PLACES_ANALYZER_CONTENT_TYPE_HEADER)
+    public static final MediaType TWITTER_PLACES_ANALYZER_MEDIA_TYPE = new MediaType('application/json')
 
-    private GPlusGetter tweetsGetter
+    private GPlusGetter gPlusGetter
     private RestTemplate restTemplate = new RestTemplate()
     private ServiceResolver serviceResolver
 
     @Autowired
-    GPlusCollectorWorker(GPlusGetter tweetsGetter, ServiceResolver serviceResolver) {
-        this.tweetsGetter = tweetsGetter
+    GPlusCollectorWorker(GPlusGetter gPlusGetter, ServiceResolver serviceResolver) {
+        this.gPlusGetter = gPlusGetter
         this.serviceResolver = serviceResolver
     }
 
     void collectAndPassToAnalyzers(String twitterLogin, Long pairId) {
-        Collection<Tweet> tweets = tweetsGetter.getTweets(twitterLogin)
+        Collection<Activity> activites = gPlusGetter.getTweets(twitterLogin)
         String analyzerUrl = serviceResolver.getUrl('analyzer').get()
-        restTemplate.put("$analyzerUrl/api/{pairId}", createEntity(tweets), pairId)
+        restTemplate.put("$analyzerUrl/api/{pairId}", createEntity(activites), pairId)
     }
 
     private HttpEntity<Object> createEntity(Object object) {
