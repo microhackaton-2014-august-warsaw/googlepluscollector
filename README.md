@@ -49,3 +49,6 @@ And it will hit analyzers at /{pairId} with activities taken from Google Plus
         }
     ]
 ```
+
+## Build status
+[![Build Status](https://travis-ci.org/microhackaton/googlepluscollector.svg?branch=master)](https://travis-ci.org/microhackaton/googlepluscollector)

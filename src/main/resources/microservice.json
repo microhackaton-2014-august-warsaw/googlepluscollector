@@ -1,13 +1,8 @@
 {
     "pl": {
-        "this": "pl/microhackaton/gplus-collector",
+        "this": "pl/microhackaton/googlepluscollector",
         "dependencies": {
-            "analyzer" : "pl/microhackaton/gplus-places-analyzer"
+            "analyzer" : "pl/microhackaton/google-topic-analyzer"
         }
     }
 }
-<dependency>
-<groupId>com.ofg</groupId>
-<artifactId>googlepluscollector-stub</artifactId>
-<version>CD-3</version>
-</dependency>
