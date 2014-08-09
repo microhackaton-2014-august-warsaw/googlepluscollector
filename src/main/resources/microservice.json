@@ -1,0 +1,8 @@
+{
+    "pl": {
+        "this": "pl/microhackaton/gplus-collector",
+        "dependencies": {
+            "analyzer" : "pl/microhackaton/gplus-places-analyzer"
+        }
+    }
+}

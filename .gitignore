@@ -1,5 +1,13 @@
-target/
-out/
+.idea
 *.iml
-.idea/
-
+build
+/bin
+.gradle
+.poject
+.settings
+.classpath
+commitHash.txt
+logs
+.log
+.zip
+/out
