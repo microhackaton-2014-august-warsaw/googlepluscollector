@@ -22,7 +22,6 @@ class GPlusConfig {
                 "v4l0veV8ev-lpRhSH3r4GPkO"));
         return registry;
     }
-
     @Bean
     public Google google() {
         return new GoogleTemplate()
