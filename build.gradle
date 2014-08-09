@@ -24,7 +24,7 @@ ext {
     buildNrLoc = project.hasProperty('buildNr') ? "${buildNr}" : "000"
     currentVersion = "${versionPrefix}-${buildNrLoc}"
     artifactGroupId = "pl.microhackaton"
-    serverPort = 8081
+    serverPort = 8013
 
     groovyVersion = '2.3.6'
     spockVersion = '0.7-groovy-2.0'
@@ -193,4 +193,8 @@ if(project.hasProperty("coverage")) {
             property "sonar.junit.reportsPath", "build/test-results"
         }
     }
+}
+
+stubRunner {
+    stubContainingRepositoryUrl = stubRepositoryUrl
 }

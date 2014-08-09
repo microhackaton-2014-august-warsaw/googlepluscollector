@@ -6,3 +6,8 @@
         }
     }
 }
+<dependency>
+<groupId>com.ofg</groupId>
+<artifactId>googlepluscollector-stub</artifactId>
+<version>CD-3</version>
+</dependency>
