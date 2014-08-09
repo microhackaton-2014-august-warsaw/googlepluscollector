@@ -96,7 +96,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.googlecode.googleplus:google-plus-java-api:0.0.3"
+    compile "org.springframework.social:spring-social-google:1.0.0.RELEASE"
     compile "org.springframework:spring-context-support:$springVersion"
     compile 'org.apache.httpcomponents:httpclient:4.3.4'
     compile 'net.sf.ehcache:ehcache:2.8.3'
