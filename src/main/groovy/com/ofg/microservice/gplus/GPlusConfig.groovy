@@ -1,4 +1,11 @@
 package com.ofg.microservice.gplus
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.http.HttpTransport
+import com.google.api.client.json.JsonFactory
+import com.google.api.client.json.jackson2.JacksonFactory
+import com.google.api.client.util.SecurityUtils
 import groovy.transform.TypeChecked
 import net.sf.ehcache.config.CacheConfiguration
 import org.springframework.cache.CacheManager
@@ -15,16 +22,26 @@ import org.springframework.social.google.connect.GoogleConnectionFactory
 @TypeChecked
 class GPlusConfig {
 
-    @Bean
-    public ConnectionFactoryLocator connectionFactoryLocator() {
-        ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
-        registry.addConnectionFactory(new GoogleConnectionFactory("73915658310-35gtaevji4f4812rq6l8fht5j3qqmqis.apps.googleusercontent.com",
-                "v4l0veV8ev-lpRhSH3r4GPkO"));
-        return registry;
-    }
+    private static final String SERVICE_ACCOUNT_EMAIL = "149133260843-tle9n3ag03r0bh2l7skd2atq123aprg3@developer.gserviceaccount.com"
+
     @Bean
     public Google google() {
-        return new GoogleTemplate("4/WBqa9UjU5khQs0yUevO2Id1Y9te5.kj9M5gJCplIToiIBeO6P2m-6wr92jwI")
+        HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+        JsonFactory jsonFactory = new JacksonFactory();
+
+        def privateKeyFromKeyStore = SecurityUtils.loadPrivateKeyFromKeyStore(SecurityUtils.getPkcs12KeyStore(), getClass().getResourceAsStream("/key.p12"), "notasecret", "privatekey", "notasecret");
+
+        GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
+                .setJsonFactory(jsonFactory)
+                .setServiceAccountId(SERVICE_ACCOUNT_EMAIL)
+                .setServiceAccountScopes(Collections.singleton("https://www.googleapis.com/auth/plus.me"))
+                .setServiceAccountPrivateKey(privateKeyFromKeyStore)
+                .build();
+
+        credential.refreshToken();
+        def accessToken = credential.getAccessToken();
+
+        return new GoogleTemplate(accessToken)
     }
 
     @Bean

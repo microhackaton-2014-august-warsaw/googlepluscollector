@@ -1,5 +1,10 @@
 package com.ofg.microservice.gplus
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.http.HttpTransport
+import com.google.api.client.json.JsonFactory
+import com.ofg.microservice.model.SimpleActivity
 import groovy.transform.PackageScope
 import groovy.transform.TypeChecked
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,14 +23,22 @@ import static org.springframework.util.StringUtils.hasText
     Google google;
 
     @Cacheable("activities")
-    Collection<Activity> getActivities(String gPlusLogin) {
+    Collection<SimpleActivity> getActivities(String gPlusLogin) {
         hasText(gPlusLogin)
-        def peoples = google.plusOperations().searchPeople(gPlusLogin, null)
+        def people = google.plusOperations().getPerson(gPlusLogin)
 
-        if (!peoples.items.isEmpty()) {
-            def id = peoples.items.get(0).id
+        def listOfActivities = Collections.emptyList();
+
+        if (!people != null) {
+            def id = people.id
             def activities = google.plusOperations().getActivities(id)
-            return activities.items;
+            for (Activity activity : activities.items) {
+                SimpleActivity simpleActivity = new SimpleActivity()
+                simpleActivity.id = activity.actor.id
+                simpleActivity.content = activity.content
+
+                listOfActivities.add(simpleActivity);
+            }
         }
         return Collections.emptyList();
     }

@@ -40,7 +40,7 @@ class AcceptanceSpec extends MicroserviceMvcWiremockSpec {
     }
 
     private ResultActions sendUsernameAndPairId() {
-        mockMvc.perform(get("/activities/$testUserGPlusId/$pairId").
+        mockMvc.perform(get("/$testUserGPlusId/$pairId").
                 accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
     }

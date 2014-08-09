@@ -2,6 +2,7 @@ package com.ofg.microservice.gplus
 
 import com.ofg.infrastructure.discovery.ServiceResolver
 import com.ofg.infrastructure.web.filter.correlationid.CorrelationIdHolder
+import com.ofg.microservice.model.SimpleActivity
 import groovy.transform.PackageScope
 import groovy.transform.TypeChecked
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,8 +30,8 @@ import org.springframework.web.client.RestTemplate
         this.serviceResolver = serviceResolver
     }
 
-    void collectAndPassToAnalyzers(String twitterLogin, Long pairId) {
-        Collection<Activity> activites = gPlusGetter.getActivities(twitterLogin)
+    void collectAndPassToAnalyzers(String gPlusLogin, Long pairId) {
+        Collection<SimpleActivity> activites = gPlusGetter.getActivities(gPlusLogin)
         String analyzerUrl = serviceResolver.getUrl('analyzer').get()
         restTemplate.put("$analyzerUrl/api/{pairId}", createEntity(activites), pairId)
     }

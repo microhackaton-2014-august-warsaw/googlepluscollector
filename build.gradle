@@ -96,6 +96,8 @@ repositories {
 }
 
 dependencies {
+    compile "com.google.http-client:google-http-client-jackson2:1.19.0"
+    compile "com.google.api-client:google-api-client:1.18.0-rc"
     compile "org.springframework.social:spring-social-google:1.0.0.RELEASE"
     compile "org.springframework:spring-context-support:$springVersion"
     compile 'org.apache.httpcomponents:httpclient:4.3.4'

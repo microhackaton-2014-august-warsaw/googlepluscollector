@@ -19,7 +19,7 @@ class GPlusCollectorController {
     }
 
     @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(value = "/activities/{gPlusLogin}/{pairId}", produces="application/json", method = RequestMethod.GET)
+    @RequestMapping(value = "/{gPlusLogin}/{pairId}", produces="application/json", method = RequestMethod.GET)
     void getTweets(@PathVariable String gPlusLogin, @PathVariable Long pairId) {
         hasText(gPlusLogin); notNull(pairId)
         collectorWorker.collectAndPassToAnalyzers(gPlusLogin, pairId)
