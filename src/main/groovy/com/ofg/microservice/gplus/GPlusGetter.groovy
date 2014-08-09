@@ -27,7 +27,7 @@ import static org.springframework.util.StringUtils.hasText
         hasText(gPlusLogin)
         def people = google.plusOperations().getPerson(gPlusLogin)
 
-        def listOfActivities = Collections.emptyList();
+        def listOfActivities = new ArrayList()
 
         if (!people != null) {
             def id = people.id

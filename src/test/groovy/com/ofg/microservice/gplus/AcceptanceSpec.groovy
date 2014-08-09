@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AcceptanceSpec extends MicroserviceMvcWiremockSpec {
     String pairId = '1'
-    String testUserGPlusId = 'jnabrdalik'
+    String testUserGPlusId = '102358108554182716756'
 
     def "should return HTTP 200"() {
         given:
@@ -34,7 +34,6 @@ class AcceptanceSpec extends MicroserviceMvcWiremockSpec {
             sendUsernameAndPairId()
         then:
             await().atMost(5, TimeUnit.SECONDS).until({ wireMock.verifyThat(putRequestedFor(urlEqualTo("/analyzer/api/$pairId")).
-                        withRequestBody(containing('[{"placeName')).
                         withHeader("Content-Type", equalTo(GPLUS_SENTENCE_ANALYZER_MEDIA_TYPE.toString())))
             })
     }
